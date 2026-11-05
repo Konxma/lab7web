@@ -1,0 +1,23 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>М’яке видалення та відновлення</title><style>body{font:16px 'Segoe UI',sans-serif;color:#23272c;background:#f2f3f5;margin:0;padding:42px}main{max-width:1150px;margin:auto}h1{font-size:32px;margin:6px 0 12px}h2{font-size:22px}h3{font-size:16px;overflow-wrap:anywhere}p{color:#565e69;line-height:1.5}.tag{letter-spacing:2px;color:#727b85;font-size:12px}section{background:white;border:1px solid #d9dce1;border-radius:10px;padding:22px;margin:18px 0}pre{font:14px/1.45 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;background:white}td,th{padding:12px;border-bottom:1px solid #ddd;text-align:left}.status{color:#1b7049}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.grid section{margin:0}</style><main><div class="tag">ПРАКТИЧНА РОБОТА 07 · ВАРІАНТ 03</div><h1>М’яке видалення та відновлення</h1><p>Фактичні результати автоматичної перевірки · 05.11.2026, 15:46:38 (Київ)<br>PostgreSQL 18.3 on x86_64-windows, compiled by msvc-19.44.35225, 64-bit<br>Збережені відповіді API; Docker-запуск не перевірявся.</p><div class="grid"><div><section><h3>DELETE /clothes/9a564ec0-e51f-497a-827b-402df641e3b7</h3><b class="status">HTTP 204</b><pre>""</pre></section><section><h3>GET /clothes/9a564ec0-e51f-497a-827b-402df641e3b7</h3><b class="status">HTTP 404</b><pre>{
+  "success": false,
+  "statusCode": 404,
+  "timestamp": "2026-11-05T13:46:34.658Z",
+  "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7",
+  "method": "GET",
+  "error": "Not Found",
+  "message": [
+    "Товар 9a564ec0-e51f-497a-827b-402df641e3b7 не знайдено"
+  ]
+}</pre></section></div><div><section><h3>PATCH /clothes/9a564ec0-e51f-497a-827b-402df641e3b7/restore</h3><b class="status">HTTP 200</b><pre>{
+  "message": "Сутність успішно відновлена"
+}</pre></section><section><h3>GET /clothes/9a564ec0-e51f-497a-827b-402df641e3b7</h3><b class="status">HTTP 200</b><pre>{
+  "id": "9a564ec0-e51f-497a-827b-402df641e3b7",
+  "title": "QA-1793886390395 Одяг 0",
+  "price": "999.99",
+  "size": "M",
+  "material": "Бавовна",
+  "color": "Чорний",
+  "createdAt": "2026-11-05T13:46:34.454Z",
+  "updatedAt": "2026-11-05T13:46:38.581Z",
+  "deletedAt": null
+}</pre></section></div></div></main></html>

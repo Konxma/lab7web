@@ -1,0 +1,35 @@
+
+> lab7-web-nestjs@1.0.0 test
+> npm run build && node --test test/api.test.js
+
+
+> lab7-web-nestjs@1.0.0 build
+> tsc -p tsconfig.build.json
+
+npm notice
+npm notice New major version of npm available! 10.9.9 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+TAP version 13
+# 13 scenario groups passed; 46 HTTP requests; PostgreSQL 18.3 on x86_64-windows, compiled by msvc-19.44.35225, 64-bit
+# Subtest: PostgreSQL: schema, CRUD, pagination, validation, soft delete, restore and process restart
+ok 1 - PostgreSQL: schema, CRUD, pagination, validation, soft delete, restore and process restart
+  ---
+  duration_ms: 8263.2847
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8444.6955
+npm notice
+npm notice New major version of npm available! 10.9.9 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

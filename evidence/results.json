@@ -1,0 +1,1045 @@
+{
+  "timestamp": "2026-11-05T13:46:38.627Z",
+  "database": "PostgreSQL 18.3 on x86_64-windows, compiled by msvc-19.44.35225, 64-bit",
+  "marker": "QA-1793886390395",
+  "checks": [
+    {
+      "name": "SQL schema: UUID, varchar lengths, decimal(10,2), enum, timestamptz",
+      "result": "PASS"
+    },
+    {
+      "name": "Create 7 rows: generated UUID, trim, exact decimal strings",
+      "result": "PASS"
+    },
+    {
+      "name": "Pagination: 3 + 3 rows, total=7, totalPages=3, distinct pages",
+      "result": "PASS"
+    },
+    {
+      "name": "Numeric sorting: price ASC",
+      "result": "PASS"
+    },
+    {
+      "name": "Case-insensitive title search (ILike)",
+      "result": "PASS"
+    },
+    {
+      "name": "Search treats SQL wildcard characters literally",
+      "result": "PASS"
+    },
+    {
+      "name": "Update and audit timestamps",
+      "result": "PASS"
+    },
+    {
+      "name": "Unknown UUID: GET/PATCH/DELETE/restore return 404",
+      "result": "PASS"
+    },
+    {
+      "name": "Validation: query bounds, UUID, field limits, enum, price, whitespace and unknown fields",
+      "result": "PASS"
+    },
+    {
+      "name": "Soft delete hides row but physically preserves timestamp",
+      "result": "PASS"
+    },
+    {
+      "name": "Full NestJS process restart preserves rows and soft deletion",
+      "result": "PASS"
+    },
+    {
+      "name": "Restore returns saved updates and clears deletedAt",
+      "result": "PASS"
+    },
+    {
+      "name": "Previous orders integration awaits repository and rejects deleted products",
+      "result": "PASS"
+    }
+  ],
+  "schema": [
+    {
+      "column_name": "id",
+      "data_type": "uuid",
+      "character_maximum_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "title",
+      "data_type": "character varying",
+      "character_maximum_length": 150,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "price",
+      "data_type": "numeric",
+      "character_maximum_length": null,
+      "numeric_precision": 10,
+      "numeric_scale": 2
+    },
+    {
+      "column_name": "size",
+      "data_type": "USER-DEFINED",
+      "character_maximum_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "material",
+      "data_type": "character varying",
+      "character_maximum_length": 80,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "color",
+      "data_type": "character varying",
+      "character_maximum_length": 50,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "createdAt",
+      "data_type": "timestamp with time zone",
+      "character_maximum_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "updatedAt",
+      "data_type": "timestamp with time zone",
+      "character_maximum_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "deletedAt",
+      "data_type": "timestamp with time zone",
+      "character_maximum_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null
+    }
+  ],
+  "transcript": [
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 201,
+      "body": {
+        "id": "9a564ec0-e51f-497a-827b-402df641e3b7",
+        "title": "QA-1793886390395 Одяг 0",
+        "price": "100.25",
+        "size": "M",
+        "material": "Бавовна",
+        "color": "Синій",
+        "createdAt": "2026-11-05T13:46:34.454Z",
+        "updatedAt": "2026-11-05T13:46:34.454Z",
+        "deletedAt": null
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 201,
+      "body": {
+        "id": "9fce9d44-1c69-47df-8fa8-5cbbe29a7574",
+        "title": "QA-1793886390395 Одяг 1",
+        "price": "110.25",
+        "size": "M",
+        "material": "Бавовна",
+        "color": "Синій",
+        "createdAt": "2026-11-05T13:46:34.480Z",
+        "updatedAt": "2026-11-05T13:46:34.480Z",
+        "deletedAt": null
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 201,
+      "body": {
+        "id": "63604e86-f15d-4ed2-ae1c-25755cab2e8f",
+        "title": "QA-1793886390395 Одяг 2",
+        "price": "120.25",
+        "size": "M",
+        "material": "Бавовна",
+        "color": "Синій",
+        "createdAt": "2026-11-05T13:46:34.489Z",
+        "updatedAt": "2026-11-05T13:46:34.489Z",
+        "deletedAt": null
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 201,
+      "body": {
+        "id": "5a57375d-8c4f-422e-a5bf-19154a8f6291",
+        "title": "QA-1793886390395 Одяг 3",
+        "price": "130.25",
+        "size": "M",
+        "material": "Бавовна",
+        "color": "Синій",
+        "createdAt": "2026-11-05T13:46:34.499Z",
+        "updatedAt": "2026-11-05T13:46:34.499Z",
+        "deletedAt": null
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 201,
+      "body": {
+        "id": "4c67173b-9fe2-41e5-ac05-7b25b5c4288c",
+        "title": "QA-1793886390395 Одяг 4",
+        "price": "140.25",
+        "size": "M",
+        "material": "Бавовна",
+        "color": "Синій",
+        "createdAt": "2026-11-05T13:46:34.507Z",
+        "updatedAt": "2026-11-05T13:46:34.507Z",
+        "deletedAt": null
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 201,
+      "body": {
+        "id": "52614063-8826-4b21-93df-8a79d450fa52",
+        "title": "QA-1793886390395 Одяг 5",
+        "price": "150.25",
+        "size": "M",
+        "material": "Бавовна",
+        "color": "Синій",
+        "createdAt": "2026-11-05T13:46:34.516Z",
+        "updatedAt": "2026-11-05T13:46:34.516Z",
+        "deletedAt": null
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 201,
+      "body": {
+        "id": "3abd1e64-b9b6-4586-9ed3-4f32a4a02275",
+        "title": "QA-1793886390395 Одяг 6",
+        "price": "160.25",
+        "size": "M",
+        "material": "Бавовна",
+        "color": "Синій",
+        "createdAt": "2026-11-05T13:46:34.524Z",
+        "updatedAt": "2026-11-05T13:46:34.524Z",
+        "deletedAt": null
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes?search=QA-1793886390395&page=1&limit=3",
+      "status": 200,
+      "body": {
+        "data": [
+          {
+            "id": "3abd1e64-b9b6-4586-9ed3-4f32a4a02275",
+            "title": "QA-1793886390395 Одяг 6",
+            "price": "160.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.524Z",
+            "updatedAt": "2026-11-05T13:46:34.524Z",
+            "deletedAt": null
+          },
+          {
+            "id": "52614063-8826-4b21-93df-8a79d450fa52",
+            "title": "QA-1793886390395 Одяг 5",
+            "price": "150.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.516Z",
+            "updatedAt": "2026-11-05T13:46:34.516Z",
+            "deletedAt": null
+          },
+          {
+            "id": "4c67173b-9fe2-41e5-ac05-7b25b5c4288c",
+            "title": "QA-1793886390395 Одяг 4",
+            "price": "140.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.507Z",
+            "updatedAt": "2026-11-05T13:46:34.507Z",
+            "deletedAt": null
+          }
+        ],
+        "meta": {
+          "total": 7,
+          "page": 1,
+          "limit": 3,
+          "totalPages": 3
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes?search=QA-1793886390395&page=2&limit=3",
+      "status": 200,
+      "body": {
+        "data": [
+          {
+            "id": "5a57375d-8c4f-422e-a5bf-19154a8f6291",
+            "title": "QA-1793886390395 Одяг 3",
+            "price": "130.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.499Z",
+            "updatedAt": "2026-11-05T13:46:34.499Z",
+            "deletedAt": null
+          },
+          {
+            "id": "63604e86-f15d-4ed2-ae1c-25755cab2e8f",
+            "title": "QA-1793886390395 Одяг 2",
+            "price": "120.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.489Z",
+            "updatedAt": "2026-11-05T13:46:34.489Z",
+            "deletedAt": null
+          },
+          {
+            "id": "9fce9d44-1c69-47df-8fa8-5cbbe29a7574",
+            "title": "QA-1793886390395 Одяг 1",
+            "price": "110.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.480Z",
+            "updatedAt": "2026-11-05T13:46:34.480Z",
+            "deletedAt": null
+          }
+        ],
+        "meta": {
+          "total": 7,
+          "page": 2,
+          "limit": 3,
+          "totalPages": 3
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes?search=QA-1793886390395&sortBy=price&order=ASC",
+      "status": 200,
+      "body": {
+        "data": [
+          {
+            "id": "9a564ec0-e51f-497a-827b-402df641e3b7",
+            "title": "QA-1793886390395 Одяг 0",
+            "price": "100.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.454Z",
+            "updatedAt": "2026-11-05T13:46:34.454Z",
+            "deletedAt": null
+          },
+          {
+            "id": "9fce9d44-1c69-47df-8fa8-5cbbe29a7574",
+            "title": "QA-1793886390395 Одяг 1",
+            "price": "110.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.480Z",
+            "updatedAt": "2026-11-05T13:46:34.480Z",
+            "deletedAt": null
+          },
+          {
+            "id": "63604e86-f15d-4ed2-ae1c-25755cab2e8f",
+            "title": "QA-1793886390395 Одяг 2",
+            "price": "120.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.489Z",
+            "updatedAt": "2026-11-05T13:46:34.489Z",
+            "deletedAt": null
+          },
+          {
+            "id": "5a57375d-8c4f-422e-a5bf-19154a8f6291",
+            "title": "QA-1793886390395 Одяг 3",
+            "price": "130.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.499Z",
+            "updatedAt": "2026-11-05T13:46:34.499Z",
+            "deletedAt": null
+          },
+          {
+            "id": "4c67173b-9fe2-41e5-ac05-7b25b5c4288c",
+            "title": "QA-1793886390395 Одяг 4",
+            "price": "140.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.507Z",
+            "updatedAt": "2026-11-05T13:46:34.507Z",
+            "deletedAt": null
+          },
+          {
+            "id": "52614063-8826-4b21-93df-8a79d450fa52",
+            "title": "QA-1793886390395 Одяг 5",
+            "price": "150.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.516Z",
+            "updatedAt": "2026-11-05T13:46:34.516Z",
+            "deletedAt": null
+          },
+          {
+            "id": "3abd1e64-b9b6-4586-9ed3-4f32a4a02275",
+            "title": "QA-1793886390395 Одяг 6",
+            "price": "160.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.524Z",
+            "updatedAt": "2026-11-05T13:46:34.524Z",
+            "deletedAt": null
+          }
+        ],
+        "meta": {
+          "total": 7,
+          "page": 1,
+          "limit": 10,
+          "totalPages": 1
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes?search=qa-1793886390395%20%D0%BE%D0%B4%D1%8F%D0%B3%203",
+      "status": 200,
+      "body": {
+        "data": [
+          {
+            "id": "5a57375d-8c4f-422e-a5bf-19154a8f6291",
+            "title": "QA-1793886390395 Одяг 3",
+            "price": "130.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.499Z",
+            "updatedAt": "2026-11-05T13:46:34.499Z",
+            "deletedAt": null
+          }
+        ],
+        "meta": {
+          "total": 1,
+          "page": 1,
+          "limit": 10,
+          "totalPages": 1
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes?search=QA-1793886390395%25",
+      "status": 200,
+      "body": {
+        "data": [],
+        "meta": {
+          "total": 0,
+          "page": 1,
+          "limit": 10,
+          "totalPages": 0
+        }
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7",
+      "status": 200,
+      "body": {
+        "id": "9a564ec0-e51f-497a-827b-402df641e3b7",
+        "title": "QA-1793886390395 Одяг 0",
+        "price": "999.99",
+        "size": "M",
+        "material": "Бавовна",
+        "color": "Чорний",
+        "createdAt": "2026-11-05T13:46:34.454Z",
+        "updatedAt": "2026-11-05T13:46:34.577Z",
+        "deletedAt": null
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes/7d76fc34-c368-4715-98ab-e05e489180b1",
+      "status": 404,
+      "body": {
+        "success": false,
+        "statusCode": 404,
+        "timestamp": "2026-11-05T13:46:34.587Z",
+        "path": "/clothes/7d76fc34-c368-4715-98ab-e05e489180b1",
+        "method": "GET",
+        "error": "Not Found",
+        "message": [
+          "Товар 7d76fc34-c368-4715-98ab-e05e489180b1 не знайдено"
+        ]
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/clothes/7d76fc34-c368-4715-98ab-e05e489180b1",
+      "status": 404,
+      "body": {
+        "success": false,
+        "statusCode": 404,
+        "timestamp": "2026-11-05T13:46:34.593Z",
+        "path": "/clothes/7d76fc34-c368-4715-98ab-e05e489180b1",
+        "method": "PATCH",
+        "error": "Not Found",
+        "message": [
+          "Товар 7d76fc34-c368-4715-98ab-e05e489180b1 не знайдено"
+        ]
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/clothes/7d76fc34-c368-4715-98ab-e05e489180b1",
+      "status": 404,
+      "body": {
+        "success": false,
+        "statusCode": 404,
+        "timestamp": "2026-11-05T13:46:34.599Z",
+        "path": "/clothes/7d76fc34-c368-4715-98ab-e05e489180b1",
+        "method": "DELETE",
+        "error": "Not Found",
+        "message": [
+          "Товар 7d76fc34-c368-4715-98ab-e05e489180b1 не знайдено"
+        ]
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/clothes/7d76fc34-c368-4715-98ab-e05e489180b1/restore",
+      "status": 404,
+      "body": {
+        "success": false,
+        "statusCode": 404,
+        "timestamp": "2026-11-05T13:46:34.603Z",
+        "path": "/clothes/7d76fc34-c368-4715-98ab-e05e489180b1/restore",
+        "method": "PATCH",
+        "error": "Not Found",
+        "message": [
+          "Видалений товар 7d76fc34-c368-4715-98ab-e05e489180b1 не знайдено"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes/invalid",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.606Z",
+        "path": "/clothes/invalid",
+        "method": "GET",
+        "error": "Bad Request",
+        "message": [
+          "Validation failed (uuid v 4 is expected)"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes?page=0",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.609Z",
+        "path": "/clothes?page=0",
+        "method": "GET",
+        "error": "Bad Request",
+        "message": [
+          "page must not be less than 1"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes?page=1.5",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.611Z",
+        "path": "/clothes?page=1.5",
+        "method": "GET",
+        "error": "Bad Request",
+        "message": [
+          "page must be an integer number"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes?limit=101",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.614Z",
+        "path": "/clothes?limit=101",
+        "method": "GET",
+        "error": "Bad Request",
+        "message": [
+          "limit must not be greater than 100"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes?sortBy=password",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.616Z",
+        "path": "/clothes?sortBy=password",
+        "method": "GET",
+        "error": "Bad Request",
+        "message": [
+          "sortBy must be one of the following values: createdAt, title, price"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes?order=DROP",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.619Z",
+        "path": "/clothes?order=DROP",
+        "method": "GET",
+        "error": "Bad Request",
+        "message": [
+          "order must be one of the following values: ASC, DESC"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes?extra=1",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.622Z",
+        "path": "/clothes?extra=1",
+        "method": "GET",
+        "error": "Bad Request",
+        "message": [
+          "property extra should not exist"
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.625Z",
+        "path": "/clothes",
+        "method": "POST",
+        "error": "Bad Request",
+        "message": [
+          "price must not be greater than 99999999.99",
+          "price must be a positive number",
+          "price must be a number conforming to the specified constraints"
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.628Z",
+        "path": "/clothes",
+        "method": "POST",
+        "error": "Bad Request",
+        "message": [
+          "price must not be greater than 99999999.99"
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.631Z",
+        "path": "/clothes",
+        "method": "POST",
+        "error": "Bad Request",
+        "message": [
+          "price must be a number conforming to the specified constraints"
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.635Z",
+        "path": "/clothes",
+        "method": "POST",
+        "error": "Bad Request",
+        "message": [
+          "title should not be empty"
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.638Z",
+        "path": "/clothes",
+        "method": "POST",
+        "error": "Bad Request",
+        "message": [
+          "title must be shorter than or equal to 150 characters"
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.642Z",
+        "path": "/clothes",
+        "method": "POST",
+        "error": "Bad Request",
+        "message": [
+          "material must be shorter than or equal to 80 characters"
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.645Z",
+        "path": "/clothes",
+        "method": "POST",
+        "error": "Bad Request",
+        "message": [
+          "color must be shorter than or equal to 50 characters"
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.649Z",
+        "path": "/clothes",
+        "method": "POST",
+        "error": "Bad Request",
+        "message": [
+          "size must be one of the following values: XS, S, M, L, XL"
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/clothes",
+      "status": 400,
+      "body": {
+        "success": false,
+        "statusCode": 400,
+        "timestamp": "2026-11-05T13:46:34.651Z",
+        "path": "/clothes",
+        "method": "POST",
+        "error": "Bad Request",
+        "message": [
+          "property extra should not exist"
+        ]
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7",
+      "status": 204,
+      "body": ""
+    },
+    {
+      "method": "GET",
+      "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7",
+      "status": 404,
+      "body": {
+        "success": false,
+        "statusCode": 404,
+        "timestamp": "2026-11-05T13:46:34.658Z",
+        "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7",
+        "method": "GET",
+        "error": "Not Found",
+        "message": [
+          "Товар 9a564ec0-e51f-497a-827b-402df641e3b7 не знайдено"
+        ]
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7",
+      "status": 404,
+      "body": {
+        "success": false,
+        "statusCode": 404,
+        "timestamp": "2026-11-05T13:46:34.662Z",
+        "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7",
+        "method": "DELETE",
+        "error": "Not Found",
+        "message": [
+          "Товар 9a564ec0-e51f-497a-827b-402df641e3b7 не знайдено"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes?search=QA-1793886390395",
+      "status": 200,
+      "body": {
+        "data": [
+          {
+            "id": "3abd1e64-b9b6-4586-9ed3-4f32a4a02275",
+            "title": "QA-1793886390395 Одяг 6",
+            "price": "160.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.524Z",
+            "updatedAt": "2026-11-05T13:46:34.524Z",
+            "deletedAt": null
+          },
+          {
+            "id": "52614063-8826-4b21-93df-8a79d450fa52",
+            "title": "QA-1793886390395 Одяг 5",
+            "price": "150.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.516Z",
+            "updatedAt": "2026-11-05T13:46:34.516Z",
+            "deletedAt": null
+          },
+          {
+            "id": "4c67173b-9fe2-41e5-ac05-7b25b5c4288c",
+            "title": "QA-1793886390395 Одяг 4",
+            "price": "140.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.507Z",
+            "updatedAt": "2026-11-05T13:46:34.507Z",
+            "deletedAt": null
+          },
+          {
+            "id": "5a57375d-8c4f-422e-a5bf-19154a8f6291",
+            "title": "QA-1793886390395 Одяг 3",
+            "price": "130.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.499Z",
+            "updatedAt": "2026-11-05T13:46:34.499Z",
+            "deletedAt": null
+          },
+          {
+            "id": "63604e86-f15d-4ed2-ae1c-25755cab2e8f",
+            "title": "QA-1793886390395 Одяг 2",
+            "price": "120.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.489Z",
+            "updatedAt": "2026-11-05T13:46:34.489Z",
+            "deletedAt": null
+          },
+          {
+            "id": "9fce9d44-1c69-47df-8fa8-5cbbe29a7574",
+            "title": "QA-1793886390395 Одяг 1",
+            "price": "110.25",
+            "size": "M",
+            "material": "Бавовна",
+            "color": "Синій",
+            "createdAt": "2026-11-05T13:46:34.480Z",
+            "updatedAt": "2026-11-05T13:46:34.480Z",
+            "deletedAt": null
+          }
+        ],
+        "meta": {
+          "total": 6,
+          "page": 1,
+          "limit": 10,
+          "totalPages": 1
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7",
+      "status": 404,
+      "body": {
+        "success": false,
+        "statusCode": 404,
+        "timestamp": "2026-11-05T13:46:38.534Z",
+        "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7",
+        "method": "GET",
+        "error": "Not Found",
+        "message": [
+          "Товар 9a564ec0-e51f-497a-827b-402df641e3b7 не знайдено"
+        ]
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes/9fce9d44-1c69-47df-8fa8-5cbbe29a7574",
+      "status": 200,
+      "body": {
+        "id": "9fce9d44-1c69-47df-8fa8-5cbbe29a7574",
+        "title": "QA-1793886390395 Одяг 1",
+        "price": "110.25",
+        "size": "M",
+        "material": "Бавовна",
+        "color": "Синій",
+        "createdAt": "2026-11-05T13:46:34.480Z",
+        "updatedAt": "2026-11-05T13:46:34.480Z",
+        "deletedAt": null
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7/restore",
+      "status": 200,
+      "body": {
+        "message": "Сутність успішно відновлена"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7",
+      "status": 200,
+      "body": {
+        "id": "9a564ec0-e51f-497a-827b-402df641e3b7",
+        "title": "QA-1793886390395 Одяг 0",
+        "price": "999.99",
+        "size": "M",
+        "material": "Бавовна",
+        "color": "Чорний",
+        "createdAt": "2026-11-05T13:46:34.454Z",
+        "updatedAt": "2026-11-05T13:46:38.581Z",
+        "deletedAt": null
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7/restore",
+      "status": 404,
+      "body": {
+        "success": false,
+        "statusCode": 404,
+        "timestamp": "2026-11-05T13:46:38.594Z",
+        "path": "/clothes/9a564ec0-e51f-497a-827b-402df641e3b7/restore",
+        "method": "PATCH",
+        "error": "Not Found",
+        "message": [
+          "Видалений товар 9a564ec0-e51f-497a-827b-402df641e3b7 не знайдено"
+        ]
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/orders",
+      "status": 201,
+      "body": {
+        "orderId": "ord-cde35694-77b9-43ba-9939-aac33d9e5745",
+        "customerEmail": "student@example.com",
+        "productId": "9fce9d44-1c69-47df-8fa8-5cbbe29a7574",
+        "productTitle": "QA-1793886390395 Одяг 1",
+        "productSlug": "qa-1793886390395-odyah-1",
+        "unitPrice": 110.25,
+        "quantity": 2,
+        "subtotal": 220.5,
+        "taxAmount": 44.1,
+        "total": 264.6,
+        "currency": "UAH",
+        "status": "confirmed",
+        "createdAt": "2026-11-05T13:46:38.605Z"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/clothes/9fce9d44-1c69-47df-8fa8-5cbbe29a7574",
+      "status": 204,
+      "body": ""
+    },
+    {
+      "method": "POST",
+      "path": "/orders",
+      "status": 404,
+      "body": {
+        "success": false,
+        "statusCode": 404,
+        "timestamp": "2026-11-05T13:46:38.620Z",
+        "path": "/orders",
+        "method": "POST",
+        "error": "Not Found",
+        "message": [
+          "Товар 9fce9d44-1c69-47df-8fa8-5cbbe29a7574 не знайдено"
+        ]
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/clothes/9fce9d44-1c69-47df-8fa8-5cbbe29a7574/restore",
+      "status": 200,
+      "body": {
+        "message": "Сутність успішно відновлена"
+      }
+    }
+  ]
+}

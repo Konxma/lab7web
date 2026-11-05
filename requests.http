@@ -1,0 +1,143 @@
+@baseUrl = http://localhost:3000
+
+### Створення товару 1
+# @name product1
+POST {{baseUrl}}/clothes
+Content-Type: application/json
+
+{
+  "title": "Футболка Classic",
+  "price": 650,
+  "size": "M",
+  "material": "Бавовна",
+  "color": "Білий"
+}
+
+### Створення товару 2
+# @name product2
+POST {{baseUrl}}/clothes
+Content-Type: application/json
+
+{
+  "title": "Худі Urban",
+  "price": 1400,
+  "size": "L",
+  "material": "Бавовна та поліестер",
+  "color": "Чорний"
+}
+
+### Створення товару 3
+# @name product3
+POST {{baseUrl}}/clothes
+Content-Type: application/json
+
+{
+  "title": "Джинси Straight",
+  "price": 1800,
+  "size": "M",
+  "material": "Денім",
+  "color": "Синій"
+}
+
+### Створення товару 4
+# @name product4
+POST {{baseUrl}}/clothes
+Content-Type: application/json
+
+{
+  "title": "Сорочка Linen",
+  "price": 1200,
+  "size": "S",
+  "material": "Льон",
+  "color": "Бежевий"
+}
+
+### Створення товару 5
+# @name product5
+POST {{baseUrl}}/clothes
+Content-Type: application/json
+
+{
+  "title": "Куртка Autumn",
+  "price": 2500,
+  "size": "XL",
+  "material": "Поліестер",
+  "color": "Сірий"
+}
+
+### Створення товару 6
+# @name product6
+POST {{baseUrl}}/clothes
+Content-Type: application/json
+
+{
+  "title": "Светр Warm",
+  "price": 1700,
+  "size": "L",
+  "material": "Вовна",
+  "color": "Зелений"
+}
+
+### Створення товару 7
+# @name product7
+POST {{baseUrl}}/clothes
+Content-Type: application/json
+
+{
+  "title": "Кросівки Sport",
+  "price": 2200,
+  "size": "M",
+  "material": "Текстиль",
+  "color": "Чорний"
+}
+
+### Сторінка 1: три записи, метадані
+GET {{baseUrl}}/clothes?page=1&limit=3
+
+### Сторінка 2
+GET {{baseUrl}}/clothes?page=2&limit=3
+
+### Пошук українською без урахування регістру
+GET {{baseUrl}}/clothes?search=футболка
+
+### Сортування за ціною
+GET {{baseUrl}}/clothes?sortBy=price&order=ASC
+
+### Читання створеного товару (спочатку виконайте product1)
+GET {{baseUrl}}/clothes/{{product1.response.body.id}}
+
+### Оновлення
+PATCH {{baseUrl}}/clothes/{{product1.response.body.id}}
+Content-Type: application/json
+
+{"price": 799.99, "color": "Чорний"}
+
+### М’яке видалення: 204
+DELETE {{baseUrl}}/clothes/{{product1.response.body.id}}
+
+### Після видалення: товар відсутній у видачі
+GET {{baseUrl}}/clothes?page=1&limit=100
+
+### Читання видаленого: 404
+GET {{baseUrl}}/clothes/{{product1.response.body.id}}
+
+### Відновлення
+PATCH {{baseUrl}}/clothes/{{product1.response.body.id}}/restore
+
+### Після відновлення: товар знову у видачі
+GET {{baseUrl}}/clothes?page=1&limit=100
+
+### Перевірка персистентності: зупиніть і знову запустіть NestJS, виконайте GET
+GET {{baseUrl}}/clothes/{{product1.response.body.id}}
+
+### Некоректна сторінка: 400
+GET {{baseUrl}}/clothes?page=0
+
+### Некоректний UUID: 400
+GET {{baseUrl}}/clothes/invalid
+
+### Некоректна ціна, розмір і зайве поле: 400
+POST {{baseUrl}}/clothes
+Content-Type: application/json
+
+{"title":"Тест","price":-1,"size":"XXL","material":"Бавовна","color":"Сірий","extra":true}

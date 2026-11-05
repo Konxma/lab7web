@@ -1,0 +1,85 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>Пагінація: дві різні сторінки</title><style>body{font:16px 'Segoe UI',sans-serif;color:#23272c;background:#f2f3f5;margin:0;padding:42px}main{max-width:1150px;margin:auto}h1{font-size:32px;margin:6px 0 12px}h2{font-size:22px}h3{font-size:16px;overflow-wrap:anywhere}p{color:#565e69;line-height:1.5}.tag{letter-spacing:2px;color:#727b85;font-size:12px}section{background:white;border:1px solid #d9dce1;border-radius:10px;padding:22px;margin:18px 0}pre{font:14px/1.45 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;background:white}td,th{padding:12px;border-bottom:1px solid #ddd;text-align:left}.status{color:#1b7049}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.grid section{margin:0}</style><main><div class="tag">ПРАКТИЧНА РОБОТА 07 · ВАРІАНТ 03</div><h1>Пагінація: дві різні сторінки</h1><p>Фактичні результати автоматичної перевірки · 05.11.2026, 15:46:38 (Київ)<br>PostgreSQL 18.3 on x86_64-windows, compiled by msvc-19.44.35225, 64-bit<br>Збережені відповіді API; Docker-запуск не перевірявся.</p><div class="grid"><section><h3>GET /clothes?search=QA-1793886390395&amp;page=1&amp;limit=3</h3><b class="status">HTTP 200</b><pre>{
+  "data": [
+    {
+      "id": "3abd1e64-b9b6-4586-9ed3-4f32a4a02275",
+      "title": "QA-1793886390395 Одяг 6",
+      "price": "160.25",
+      "size": "M",
+      "material": "Бавовна",
+      "color": "Синій",
+      "createdAt": "2026-11-05T13:46:34.524Z",
+      "updatedAt": "2026-11-05T13:46:34.524Z",
+      "deletedAt": null
+    },
+    {
+      "id": "52614063-8826-4b21-93df-8a79d450fa52",
+      "title": "QA-1793886390395 Одяг 5",
+      "price": "150.25",
+      "size": "M",
+      "material": "Бавовна",
+      "color": "Синій",
+      "createdAt": "2026-11-05T13:46:34.516Z",
+      "updatedAt": "2026-11-05T13:46:34.516Z",
+      "deletedAt": null
+    },
+    {
+      "id": "4c67173b-9fe2-41e5-ac05-7b25b5c4288c",
+      "title": "QA-1793886390395 Одяг 4",
+      "price": "140.25",
+      "size": "M",
+      "material": "Бавовна",
+      "color": "Синій",
+      "createdAt": "2026-11-05T13:46:34.507Z",
+      "updatedAt": "2026-11-05T13:46:34.507Z",
+      "deletedAt": null
+    }
+  ],
+  "meta": {
+    "total": 7,
+    "page": 1,
+    "limit": 3,
+    "totalPages": 3
+  }
+}</pre></section><section><h3>GET /clothes?search=QA-1793886390395&amp;page=2&amp;limit=3</h3><b class="status">HTTP 200</b><pre>{
+  "data": [
+    {
+      "id": "5a57375d-8c4f-422e-a5bf-19154a8f6291",
+      "title": "QA-1793886390395 Одяг 3",
+      "price": "130.25",
+      "size": "M",
+      "material": "Бавовна",
+      "color": "Синій",
+      "createdAt": "2026-11-05T13:46:34.499Z",
+      "updatedAt": "2026-11-05T13:46:34.499Z",
+      "deletedAt": null
+    },
+    {
+      "id": "63604e86-f15d-4ed2-ae1c-25755cab2e8f",
+      "title": "QA-1793886390395 Одяг 2",
+      "price": "120.25",
+      "size": "M",
+      "material": "Бавовна",
+      "color": "Синій",
+      "createdAt": "2026-11-05T13:46:34.489Z",
+      "updatedAt": "2026-11-05T13:46:34.489Z",
+      "deletedAt": null
+    },
+    {
+      "id": "9fce9d44-1c69-47df-8fa8-5cbbe29a7574",
+      "title": "QA-1793886390395 Одяг 1",
+      "price": "110.25",
+      "size": "M",
+      "material": "Бавовна",
+      "color": "Синій",
+      "createdAt": "2026-11-05T13:46:34.480Z",
+      "updatedAt": "2026-11-05T13:46:34.480Z",
+      "deletedAt": null
+    }
+  ],
+  "meta": {
+    "total": 7,
+    "page": 2,
+    "limit": 3,
+    "totalPages": 3
+  }
+}</pre></section></div></main></html>

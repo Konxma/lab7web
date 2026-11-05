@@ -1,0 +1,199 @@
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [NestFactory] Starting Nest application...
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [InstanceLoader] AppModule dependencies initialized +111ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [InstanceLoader] TypeOrmModule dependencies initialized +0ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [InstanceLoader] HomeModule dependencies initialized +0ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [InstanceLoader] SharedModule dependencies initialized +0ms
+query: SELECT version()
+query: SELECT * FROM current_schema()
+query: CREATE EXTENSION IF NOT EXISTS "uuid-ossp"
+query: START TRANSACTION
+query: SELECT * FROM current_schema()
+query: SELECT * FROM current_database()
+query: SELECT "table_schema", "table_name", obj_description(('"' || "table_schema" || '"."' || "table_name" || '"')::regclass, 'pg_class') AS table_comment FROM "information_schema"."tables" WHERE ("table_schema" = 'public' AND "table_name" = 'clothes')
+query: SELECT TRUE FROM information_schema.columns WHERE table_name = 'pg_class' and column_name = 'relispartition'
+query: SELECT columns.*, pg_catalog.col_description(('"' || table_catalog || '"."' || table_schema || '"."' || table_name || '"')::regclass::oid, ordinal_position) AS description, ('"' || "udt_schema" || '"."' || "udt_name" || '"')::"regtype"::text AS "regtype", pg_catalog.format_type("col_attr"."atttypid", "col_attr"."atttypmod") AS "format_type" FROM "information_schema"."columns" LEFT JOIN "pg_catalog"."pg_attribute" AS "col_attr" ON "col_attr"."attname" = "columns"."column_name" AND "col_attr"."attrelid" = ( SELECT "cls"."oid" FROM "pg_catalog"."pg_class" AS "cls" LEFT JOIN "pg_catalog"."pg_namespace" AS "ns" ON "ns"."oid" = "cls"."relnamespace" WHERE "cls"."relname" = "columns"."table_name" AND "ns"."nspname" = "columns"."table_schema" ) WHERE ("table_schema" = 'public' AND "table_name" = 'clothes')
+query: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "cnst"."conname" AS "constraint_name", pg_get_constraintdef("cnst"."oid") AS "expression", CASE "cnst"."contype" WHEN 'p' THEN 'PRIMARY' WHEN 'u' THEN 'UNIQUE' WHEN 'c' THEN 'CHECK' WHEN 'x' THEN 'EXCLUDE' END AS "constraint_type", "a"."attname" AS "column_name" FROM "pg_constraint" "cnst" INNER JOIN "pg_class" "t" ON "t"."oid" = "cnst"."conrelid" INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "cnst"."connamespace" LEFT JOIN "pg_attribute" "a" ON "a"."attrelid" = "cnst"."conrelid" AND "a"."attnum" = ANY ("cnst"."conkey") WHERE "t"."relkind" IN ('r', 'p') AND (("ns"."nspname" = 'public' AND "t"."relname" = 'clothes'))
+query: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "i"."relname" AS "constraint_name", "a"."attname" AS "column_name", CASE "ix"."indisunique" WHEN 't' THEN 'TRUE' ELSE'FALSE' END AS "is_unique", pg_get_expr("ix"."indpred", "ix"."indrelid") AS "condition", "types"."typname" AS "type_name", "am"."amname" AS "index_type" FROM "pg_class" "t" INNER JOIN "pg_index" "ix" ON "ix"."indrelid" = "t"."oid" INNER JOIN "pg_attribute" "a" ON "a"."attrelid" = "t"."oid"  AND "a"."attnum" = ANY ("ix"."indkey") INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "t"."relnamespace" INNER JOIN "pg_class" "i" ON "i"."oid" = "ix"."indexrelid" INNER JOIN "pg_type" "types" ON "types"."oid" = "a"."atttypid" INNER JOIN "pg_am" "am" ON "i"."relam" = "am"."oid" LEFT JOIN "pg_constraint" "cnst" ON "cnst"."conname" = "i"."relname" WHERE "t"."relkind" IN ('r', 'p') AND "cnst"."contype" IS NULL AND (("ns"."nspname" = 'public' AND "t"."relname" = 'clothes'))
+query: SELECT "con"."conname" AS "constraint_name", "con"."nspname" AS "table_schema", "con"."relname" AS "table_name", "att2"."attname" AS "column_name", "ns"."nspname" AS "referenced_table_schema", "cl"."relname" AS "referenced_table_name", "att"."attname" AS "referenced_column_name", "con"."confdeltype" AS "on_delete", "con"."confupdtype" AS "on_update", "con"."condeferrable" AS "deferrable", "con"."condeferred" AS "deferred" FROM ( SELECT UNNEST ("con1"."conkey") AS "parent", UNNEST ("con1"."confkey") AS "child", "con1"."confrelid", "con1"."conrelid", "con1"."conname", "con1"."contype", "ns"."nspname", "cl"."relname", "con1"."condeferrable", CASE WHEN "con1"."condeferred" THEN 'INITIALLY DEFERRED' ELSE 'INITIALLY IMMEDIATE' END as condeferred, CASE "con1"."confdeltype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confdeltype", CASE "con1"."confupdtype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confupdtype" FROM "pg_class" "cl" INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_constraint" "con1" ON "con1"."conrelid" = "cl"."oid" WHERE "con1"."contype" = 'f' AND (("ns"."nspname" = 'public' AND "cl"."relname" = 'clothes')) ) "con" INNER JOIN "pg_attribute" "att" ON "att"."attrelid" = "con"."confrelid" AND "att"."attnum" = "con"."child" INNER JOIN "pg_class" "cl" ON "cl"."oid" = "con"."confrelid"  AND "cl"."relispartition" = 'f'INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_attribute" "att2" ON "att2"."attrelid" = "con"."conrelid" AND "att2"."attnum" = "con"."parent"
+query: SELECT "udt_schema", "udt_name" FROM "information_schema"."columns" WHERE "table_schema" = 'public' AND "table_name" = 'clothes' AND "column_name"='size'
+query: SELECT "e"."enumlabel" AS "value" FROM "pg_enum" "e" INNER JOIN "pg_type" "t" ON "t"."oid" = "e"."enumtypid" INNER JOIN "pg_namespace" "n" ON "n"."oid" = "t"."typnamespace" WHERE "n"."nspname" = 'public' AND "t"."typname" = 'clothes_size_enum'
+query: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'typeorm_metadata'
+query: COMMIT
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [InstanceLoader] TypeOrmCoreModule dependencies initialized +114ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [InstanceLoader] TypeOrmModule dependencies initialized +0ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [InstanceLoader] ClothesModule dependencies initialized +1ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [InstanceLoader] OrdersModule dependencies initialized +0ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [RoutesResolver] HomeController {/}: +13ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [RouterExplorer] Mapped {/, GET} route +4ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [RoutesResolver] ClothesController {/clothes}: +0ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [RouterExplorer] Mapped {/clothes, GET} route +1ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [RouterExplorer] Mapped {/clothes/:id, GET} route +0ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [RouterExplorer] Mapped {/clothes, POST} route +1ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [RouterExplorer] Mapped {/clothes/:id, PATCH} route +0ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [RouterExplorer] Mapped {/clothes/:id/restore, PATCH} route +0ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [RouterExplorer] Mapped {/clothes/:id, DELETE} route +1ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [RoutesResolver] OrdersController {/orders}: +0ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [RouterExplorer] Mapped {/orders, POST} route +0ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [RouterExplorer] Mapped {/orders, GET} route +1ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [OrdersService] Сервіс замовлень готовий до прийому замовлень.
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [NestApplication] Nest application successfully started +1ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] GET / виконано за 0.61ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET / 200 +6.90ms [::ffff:127.0.0.1]
+query: START TRANSACTION
+query: INSERT INTO "clothes"("id", "title", "price", "size", "material", "color", "createdAt", "updatedAt", "deletedAt") VALUES (DEFAULT, $1, $2, $3, $4, $5, DEFAULT, DEFAULT, DEFAULT) RETURNING "id", "createdAt", "updatedAt", "deletedAt" -- PARAMETERS: ["QA-1793886390395 Одяг 0","100.25","M","Бавовна","Синій"]
+query: COMMIT
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] POST /clothes виконано за 23.53ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 201 +26.49ms [::ffff:127.0.0.1]
+query: START TRANSACTION
+query: INSERT INTO "clothes"("id", "title", "price", "size", "material", "color", "createdAt", "updatedAt", "deletedAt") VALUES (DEFAULT, $1, $2, $3, $4, $5, DEFAULT, DEFAULT, DEFAULT) RETURNING "id", "createdAt", "updatedAt", "deletedAt" -- PARAMETERS: ["QA-1793886390395 Одяг 1","110.25","M","Бавовна","Синій"]
+query: COMMIT
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] POST /clothes виконано за 6.06ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 201 +7.43ms [::ffff:127.0.0.1]
+query: START TRANSACTION
+query: INSERT INTO "clothes"("id", "title", "price", "size", "material", "color", "createdAt", "updatedAt", "deletedAt") VALUES (DEFAULT, $1, $2, $3, $4, $5, DEFAULT, DEFAULT, DEFAULT) RETURNING "id", "createdAt", "updatedAt", "deletedAt" -- PARAMETERS: ["QA-1793886390395 Одяг 2","120.25","M","Бавовна","Синій"]
+query: COMMIT
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] POST /clothes виконано за 5.19ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 201 +6.80ms [::ffff:127.0.0.1]
+query: START TRANSACTION
+query: INSERT INTO "clothes"("id", "title", "price", "size", "material", "color", "createdAt", "updatedAt", "deletedAt") VALUES (DEFAULT, $1, $2, $3, $4, $5, DEFAULT, DEFAULT, DEFAULT) RETURNING "id", "createdAt", "updatedAt", "deletedAt" -- PARAMETERS: ["QA-1793886390395 Одяг 3","130.25","M","Бавовна","Синій"]
+query: COMMIT
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] POST /clothes виконано за 4.30ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 201 +5.76ms [::ffff:127.0.0.1]
+query: START TRANSACTION
+query: INSERT INTO "clothes"("id", "title", "price", "size", "material", "color", "createdAt", "updatedAt", "deletedAt") VALUES (DEFAULT, $1, $2, $3, $4, $5, DEFAULT, DEFAULT, DEFAULT) RETURNING "id", "createdAt", "updatedAt", "deletedAt" -- PARAMETERS: ["QA-1793886390395 Одяг 4","140.25","M","Бавовна","Синій"]
+query: COMMIT
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] POST /clothes виконано за 4.87ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 201 +6.22ms [::ffff:127.0.0.1]
+query: START TRANSACTION
+query: INSERT INTO "clothes"("id", "title", "price", "size", "material", "color", "createdAt", "updatedAt", "deletedAt") VALUES (DEFAULT, $1, $2, $3, $4, $5, DEFAULT, DEFAULT, DEFAULT) RETURNING "id", "createdAt", "updatedAt", "deletedAt" -- PARAMETERS: ["QA-1793886390395 Одяг 5","150.25","M","Бавовна","Синій"]
+query: COMMIT
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] POST /clothes виконано за 4.33ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 201 +5.81ms [::ffff:127.0.0.1]
+query: START TRANSACTION
+query: INSERT INTO "clothes"("id", "title", "price", "size", "material", "color", "createdAt", "updatedAt", "deletedAt") VALUES (DEFAULT, $1, $2, $3, $4, $5, DEFAULT, DEFAULT, DEFAULT) RETURNING "id", "createdAt", "updatedAt", "deletedAt" -- PARAMETERS: ["QA-1793886390395 Одяг 6","160.25","M","Бавовна","Синій"]
+query: COMMIT
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] POST /clothes виконано за 4.37ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 201 +5.64ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."title" ILIKE $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) ORDER BY "ClothingEntity"."createdAt" DESC, "ClothingEntity"."id" ASC LIMIT 3 OFFSET 0 -- PARAMETERS: ["%QA-1793886390395%"]
+query: SELECT COUNT(1) AS "cnt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."title" ILIKE $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) -- PARAMETERS: ["%QA-1793886390395%"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] GET /clothes?search=QA-1793886390395&page=1&limit=3 виконано за 11.90ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes?search=QA-1793886390395&page=1&limit=3 200 +14.12ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."title" ILIKE $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) ORDER BY "ClothingEntity"."createdAt" DESC, "ClothingEntity"."id" ASC LIMIT 3 OFFSET 3 -- PARAMETERS: ["%QA-1793886390395%"]
+query: SELECT COUNT(1) AS "cnt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."title" ILIKE $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) -- PARAMETERS: ["%QA-1793886390395%"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] GET /clothes?search=QA-1793886390395&page=2&limit=3 виконано за 3.93ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes?search=QA-1793886390395&page=2&limit=3 200 +5.57ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."title" ILIKE $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) ORDER BY "ClothingEntity"."price" ASC, "ClothingEntity"."id" ASC LIMIT 10 OFFSET 0 -- PARAMETERS: ["%QA-1793886390395%"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] GET /clothes?search=QA-1793886390395&sortBy=price&order=ASC виконано за 3.34ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes?search=QA-1793886390395&sortBy=price&order=ASC 200 +4.51ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."title" ILIKE $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) ORDER BY "ClothingEntity"."createdAt" DESC, "ClothingEntity"."id" ASC LIMIT 10 OFFSET 0 -- PARAMETERS: ["%qa-1793886390395 одяг 3%"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] GET /clothes?search=qa-1793886390395%20%D0%BE%D0%B4%D1%8F%D0%B3%203 виконано за 1.94ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes?search=qa-1793886390395%20%D0%BE%D0%B4%D1%8F%D0%B3%203 200 +3.09ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."title" ILIKE $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) ORDER BY "ClothingEntity"."createdAt" DESC, "ClothingEntity"."id" ASC LIMIT 10 OFFSET 0 -- PARAMETERS: ["%QA-1793886390395\\%%"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] GET /clothes?search=QA-1793886390395%25 виконано за 2.06ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes?search=QA-1793886390395%25 200 +3.23ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."id" = $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) LIMIT 1 -- PARAMETERS: ["9a564ec0-e51f-497a-827b-402df641e3b7"]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE "ClothingEntity"."id" IN ($1) -- PARAMETERS: ["9a564ec0-e51f-497a-827b-402df641e3b7"]
+query: START TRANSACTION
+query: UPDATE "clothes" SET "price" = $1, "color" = $2, "updatedAt" = CURRENT_TIMESTAMP WHERE "id" IN ($3) RETURNING "updatedAt" -- PARAMETERS: ["999.99","Чорний","9a564ec0-e51f-497a-827b-402df641e3b7"]
+query: COMMIT
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] PATCH /clothes/9a564ec0-e51f-497a-827b-402df641e3b7 виконано за 10.99ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] PATCH /clothes/9a564ec0-e51f-497a-827b-402df641e3b7 200 +12.26ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."id" = $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) LIMIT 1 -- PARAMETERS: ["7d76fc34-c368-4715-98ab-e05e489180b1"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes/7d76fc34-c368-4715-98ab-e05e489180b1 404 +3.90ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."id" = $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) LIMIT 1 -- PARAMETERS: ["7d76fc34-c368-4715-98ab-e05e489180b1"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] PATCH /clothes/7d76fc34-c368-4715-98ab-e05e489180b1 404 +2.84ms [::ffff:127.0.0.1]
+query: UPDATE "clothes" SET "deletedAt" = CURRENT_TIMESTAMP, "updatedAt" = CURRENT_TIMESTAMP WHERE ("id" = $1 AND "deletedAt" IS NULL) -- PARAMETERS: ["7d76fc34-c368-4715-98ab-e05e489180b1"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] DELETE /clothes/7d76fc34-c368-4715-98ab-e05e489180b1 404 +3.76ms [::ffff:127.0.0.1]
+query: UPDATE "clothes" SET "deletedAt" = NULL, "updatedAt" = CURRENT_TIMESTAMP WHERE ("id" = $1 AND NOT("deletedAt" IS NULL)) -- PARAMETERS: ["7d76fc34-c368-4715-98ab-e05e489180b1"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] PATCH /clothes/7d76fc34-c368-4715-98ab-e05e489180b1/restore 404 +3.08ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes/invalid 400 +1.15ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes?page=0 400 +1.70ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes?page=1.5 400 +1.15ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes?limit=101 400 +1.22ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes?sortBy=password 400 +1.54ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes?order=DROP 400 +1.13ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes?extra=1 400 +1.77ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 400 +1.18ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 400 +1.29ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 400 +1.38ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 400 +1.27ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 400 +2.00ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 400 +1.10ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 400 +1.30ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 400 +1.47ms [::ffff:127.0.0.1]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] POST /clothes 400 +0.96ms [::ffff:127.0.0.1]
+query: UPDATE "clothes" SET "deletedAt" = CURRENT_TIMESTAMP, "updatedAt" = CURRENT_TIMESTAMP WHERE ("id" = $1 AND "deletedAt" IS NULL) -- PARAMETERS: ["9a564ec0-e51f-497a-827b-402df641e3b7"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] DELETE /clothes/9a564ec0-e51f-497a-827b-402df641e3b7 виконано за 1.40ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] DELETE /clothes/9a564ec0-e51f-497a-827b-402df641e3b7 204 +2.33ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."id" = $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) LIMIT 1 -- PARAMETERS: ["9a564ec0-e51f-497a-827b-402df641e3b7"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes/9a564ec0-e51f-497a-827b-402df641e3b7 404 +2.19ms [::ffff:127.0.0.1]
+query: UPDATE "clothes" SET "deletedAt" = CURRENT_TIMESTAMP, "updatedAt" = CURRENT_TIMESTAMP WHERE ("id" = $1 AND "deletedAt" IS NULL) -- PARAMETERS: ["9a564ec0-e51f-497a-827b-402df641e3b7"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] DELETE /clothes/9a564ec0-e51f-497a-827b-402df641e3b7 404 +2.18ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."title" ILIKE $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) ORDER BY "ClothingEntity"."createdAt" DESC, "ClothingEntity"."id" ASC LIMIT 10 OFFSET 0 -- PARAMETERS: ["%QA-1793886390395%"]
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [TIMING] GET /clothes?search=QA-1793886390395 виконано за 3.85ms
+[Nest] 19724  - 05.11.2026, 15:46:34     LOG [HTTP] GET /clothes?search=QA-1793886390395 200 +4.90ms [::ffff:127.0.0.1]
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [NestFactory] Starting Nest application...
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [InstanceLoader] AppModule dependencies initialized +126ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [InstanceLoader] TypeOrmModule dependencies initialized +0ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [InstanceLoader] HomeModule dependencies initialized +0ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [InstanceLoader] SharedModule dependencies initialized +0ms
+query: SELECT version()
+query: SELECT * FROM current_schema()
+query: CREATE EXTENSION IF NOT EXISTS "uuid-ossp"
+query: START TRANSACTION
+query: SELECT * FROM current_schema()
+query: SELECT * FROM current_database()
+query: SELECT "table_schema", "table_name", obj_description(('"' || "table_schema" || '"."' || "table_name" || '"')::regclass, 'pg_class') AS table_comment FROM "information_schema"."tables" WHERE ("table_schema" = 'public' AND "table_name" = 'clothes')
+query: SELECT TRUE FROM information_schema.columns WHERE table_name = 'pg_class' and column_name = 'relispartition'
+query: SELECT columns.*, pg_catalog.col_description(('"' || table_catalog || '"."' || table_schema || '"."' || table_name || '"')::regclass::oid, ordinal_position) AS description, ('"' || "udt_schema" || '"."' || "udt_name" || '"')::"regtype"::text AS "regtype", pg_catalog.format_type("col_attr"."atttypid", "col_attr"."atttypmod") AS "format_type" FROM "information_schema"."columns" LEFT JOIN "pg_catalog"."pg_attribute" AS "col_attr" ON "col_attr"."attname" = "columns"."column_name" AND "col_attr"."attrelid" = ( SELECT "cls"."oid" FROM "pg_catalog"."pg_class" AS "cls" LEFT JOIN "pg_catalog"."pg_namespace" AS "ns" ON "ns"."oid" = "cls"."relnamespace" WHERE "cls"."relname" = "columns"."table_name" AND "ns"."nspname" = "columns"."table_schema" ) WHERE ("table_schema" = 'public' AND "table_name" = 'clothes')
+query: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "cnst"."conname" AS "constraint_name", pg_get_constraintdef("cnst"."oid") AS "expression", CASE "cnst"."contype" WHEN 'p' THEN 'PRIMARY' WHEN 'u' THEN 'UNIQUE' WHEN 'c' THEN 'CHECK' WHEN 'x' THEN 'EXCLUDE' END AS "constraint_type", "a"."attname" AS "column_name" FROM "pg_constraint" "cnst" INNER JOIN "pg_class" "t" ON "t"."oid" = "cnst"."conrelid" INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "cnst"."connamespace" LEFT JOIN "pg_attribute" "a" ON "a"."attrelid" = "cnst"."conrelid" AND "a"."attnum" = ANY ("cnst"."conkey") WHERE "t"."relkind" IN ('r', 'p') AND (("ns"."nspname" = 'public' AND "t"."relname" = 'clothes'))
+query: SELECT "ns"."nspname" AS "table_schema", "t"."relname" AS "table_name", "i"."relname" AS "constraint_name", "a"."attname" AS "column_name", CASE "ix"."indisunique" WHEN 't' THEN 'TRUE' ELSE'FALSE' END AS "is_unique", pg_get_expr("ix"."indpred", "ix"."indrelid") AS "condition", "types"."typname" AS "type_name", "am"."amname" AS "index_type" FROM "pg_class" "t" INNER JOIN "pg_index" "ix" ON "ix"."indrelid" = "t"."oid" INNER JOIN "pg_attribute" "a" ON "a"."attrelid" = "t"."oid"  AND "a"."attnum" = ANY ("ix"."indkey") INNER JOIN "pg_namespace" "ns" ON "ns"."oid" = "t"."relnamespace" INNER JOIN "pg_class" "i" ON "i"."oid" = "ix"."indexrelid" INNER JOIN "pg_type" "types" ON "types"."oid" = "a"."atttypid" INNER JOIN "pg_am" "am" ON "i"."relam" = "am"."oid" LEFT JOIN "pg_constraint" "cnst" ON "cnst"."conname" = "i"."relname" WHERE "t"."relkind" IN ('r', 'p') AND "cnst"."contype" IS NULL AND (("ns"."nspname" = 'public' AND "t"."relname" = 'clothes'))
+query: SELECT "con"."conname" AS "constraint_name", "con"."nspname" AS "table_schema", "con"."relname" AS "table_name", "att2"."attname" AS "column_name", "ns"."nspname" AS "referenced_table_schema", "cl"."relname" AS "referenced_table_name", "att"."attname" AS "referenced_column_name", "con"."confdeltype" AS "on_delete", "con"."confupdtype" AS "on_update", "con"."condeferrable" AS "deferrable", "con"."condeferred" AS "deferred" FROM ( SELECT UNNEST ("con1"."conkey") AS "parent", UNNEST ("con1"."confkey") AS "child", "con1"."confrelid", "con1"."conrelid", "con1"."conname", "con1"."contype", "ns"."nspname", "cl"."relname", "con1"."condeferrable", CASE WHEN "con1"."condeferred" THEN 'INITIALLY DEFERRED' ELSE 'INITIALLY IMMEDIATE' END as condeferred, CASE "con1"."confdeltype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confdeltype", CASE "con1"."confupdtype" WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END as "confupdtype" FROM "pg_class" "cl" INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_constraint" "con1" ON "con1"."conrelid" = "cl"."oid" WHERE "con1"."contype" = 'f' AND (("ns"."nspname" = 'public' AND "cl"."relname" = 'clothes')) ) "con" INNER JOIN "pg_attribute" "att" ON "att"."attrelid" = "con"."confrelid" AND "att"."attnum" = "con"."child" INNER JOIN "pg_class" "cl" ON "cl"."oid" = "con"."confrelid"  AND "cl"."relispartition" = 'f'INNER JOIN "pg_namespace" "ns" ON "cl"."relnamespace" = "ns"."oid" INNER JOIN "pg_attribute" "att2" ON "att2"."attrelid" = "con"."conrelid" AND "att2"."attnum" = "con"."parent"
+query: SELECT "udt_schema", "udt_name" FROM "information_schema"."columns" WHERE "table_schema" = 'public' AND "table_name" = 'clothes' AND "column_name"='size'
+query: SELECT "e"."enumlabel" AS "value" FROM "pg_enum" "e" INNER JOIN "pg_type" "t" ON "t"."oid" = "e"."enumtypid" INNER JOIN "pg_namespace" "n" ON "n"."oid" = "t"."typnamespace" WHERE "n"."nspname" = 'public' AND "t"."typname" = 'clothes_size_enum'
+query: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'typeorm_metadata'
+query: COMMIT
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [InstanceLoader] TypeOrmCoreModule dependencies initialized +131ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [InstanceLoader] TypeOrmModule dependencies initialized +0ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [InstanceLoader] ClothesModule dependencies initialized +1ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [InstanceLoader] OrdersModule dependencies initialized +0ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [RoutesResolver] HomeController {/}: +10ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [RouterExplorer] Mapped {/, GET} route +2ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [RoutesResolver] ClothesController {/clothes}: +1ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [RouterExplorer] Mapped {/clothes, GET} route +0ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [RouterExplorer] Mapped {/clothes/:id, GET} route +1ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [RouterExplorer] Mapped {/clothes, POST} route +1ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [RouterExplorer] Mapped {/clothes/:id, PATCH} route +0ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [RouterExplorer] Mapped {/clothes/:id/restore, PATCH} route +0ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [RouterExplorer] Mapped {/clothes/:id, DELETE} route +1ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [RoutesResolver] OrdersController {/orders}: +0ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [RouterExplorer] Mapped {/orders, POST} route +0ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [RouterExplorer] Mapped {/orders, GET} route +1ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [OrdersService] Сервіс замовлень готовий до прийому замовлень.
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [NestApplication] Nest application successfully started +1ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [TIMING] GET / виконано за 0.92ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [HTTP] GET / 200 +10.09ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."id" = $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) LIMIT 1 -- PARAMETERS: ["9a564ec0-e51f-497a-827b-402df641e3b7"]
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [HTTP] GET /clothes/9a564ec0-e51f-497a-827b-402df641e3b7 404 +16.49ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."id" = $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) LIMIT 1 -- PARAMETERS: ["9fce9d44-1c69-47df-8fa8-5cbbe29a7574"]
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [TIMING] GET /clothes/9fce9d44-1c69-47df-8fa8-5cbbe29a7574 виконано за 4.29ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [HTTP] GET /clothes/9fce9d44-1c69-47df-8fa8-5cbbe29a7574 200 +6.25ms [::ffff:127.0.0.1]
+query: UPDATE "clothes" SET "deletedAt" = NULL, "updatedAt" = CURRENT_TIMESTAMP WHERE ("id" = $1 AND NOT("deletedAt" IS NULL)) -- PARAMETERS: ["9a564ec0-e51f-497a-827b-402df641e3b7"]
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [TIMING] PATCH /clothes/9a564ec0-e51f-497a-827b-402df641e3b7/restore виконано за 6.68ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [HTTP] PATCH /clothes/9a564ec0-e51f-497a-827b-402df641e3b7/restore 200 +8.83ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."id" = $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) LIMIT 1 -- PARAMETERS: ["9a564ec0-e51f-497a-827b-402df641e3b7"]
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [TIMING] GET /clothes/9a564ec0-e51f-497a-827b-402df641e3b7 виконано за 2.26ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [HTTP] GET /clothes/9a564ec0-e51f-497a-827b-402df641e3b7 200 +4.33ms [::ffff:127.0.0.1]
+query: UPDATE "clothes" SET "deletedAt" = NULL, "updatedAt" = CURRENT_TIMESTAMP WHERE ("id" = $1 AND NOT("deletedAt" IS NULL)) -- PARAMETERS: ["9a564ec0-e51f-497a-827b-402df641e3b7"]
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [HTTP] PATCH /clothes/9a564ec0-e51f-497a-827b-402df641e3b7/restore 404 +3.42ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."id" = $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) LIMIT 1 -- PARAMETERS: ["9fce9d44-1c69-47df-8fa8-5cbbe29a7574"]
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [TIMING] POST /orders виконано за 7.46ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [HTTP] POST /orders 201 +9.06ms [::ffff:127.0.0.1]
+query: UPDATE "clothes" SET "deletedAt" = CURRENT_TIMESTAMP, "updatedAt" = CURRENT_TIMESTAMP WHERE ("id" = $1 AND "deletedAt" IS NULL) -- PARAMETERS: ["9fce9d44-1c69-47df-8fa8-5cbbe29a7574"]
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [TIMING] DELETE /clothes/9fce9d44-1c69-47df-8fa8-5cbbe29a7574 виконано за 3.06ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [HTTP] DELETE /clothes/9fce9d44-1c69-47df-8fa8-5cbbe29a7574 204 +4.79ms [::ffff:127.0.0.1]
+query: SELECT "ClothingEntity"."id" AS "ClothingEntity_id", "ClothingEntity"."title" AS "ClothingEntity_title", "ClothingEntity"."price" AS "ClothingEntity_price", "ClothingEntity"."size" AS "ClothingEntity_size", "ClothingEntity"."material" AS "ClothingEntity_material", "ClothingEntity"."color" AS "ClothingEntity_color", "ClothingEntity"."createdAt" AS "ClothingEntity_createdAt", "ClothingEntity"."updatedAt" AS "ClothingEntity_updatedAt", "ClothingEntity"."deletedAt" AS "ClothingEntity_deletedAt" FROM "clothes" "ClothingEntity" WHERE ( (("ClothingEntity"."id" = $1)) ) AND ( "ClothingEntity"."deletedAt" IS NULL ) LIMIT 1 -- PARAMETERS: ["9fce9d44-1c69-47df-8fa8-5cbbe29a7574"]
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [HTTP] POST /orders 404 +6.02ms [::ffff:127.0.0.1]
+query: UPDATE "clothes" SET "deletedAt" = NULL, "updatedAt" = CURRENT_TIMESTAMP WHERE ("id" = $1 AND NOT("deletedAt" IS NULL)) -- PARAMETERS: ["9fce9d44-1c69-47df-8fa8-5cbbe29a7574"]
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [TIMING] PATCH /clothes/9fce9d44-1c69-47df-8fa8-5cbbe29a7574/restore виконано за 2.48ms
+[Nest] 26136  - 05.11.2026, 15:46:38     LOG [HTTP] PATCH /clothes/9fce9d44-1c69-47df-8fa8-5cbbe29a7574/restore 200 +4.07ms [::ffff:127.0.0.1]
